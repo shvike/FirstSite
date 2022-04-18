@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {{ news_item.title }} :: {{ block.super }}
+{% endblock %}
+
+{% block sidebar %}
+{% include 'inc/_sidebar.html' %}
+{% endblock %}
+
+{% block content %}
+<div class="card mb-3">
+    <div class="card-header">
+        {{ forloop.counter }} / {{news|length}} Категория: <a href="{{ news_item.category.get_absolute_url }}"> {{ item.category }} </a>
+    </div>
+    <div class="card-body">
+        <div class="media">
+            {% if item.photo %}
+            <img src="{{ news_item.photo.url }}" alt="" width="200" class="mr-3">
+            {% else %}
+            <img src="https://s2.best-wallpaper.net/wallpaper/iphone/1610/Palm-trees-clouds-dusk_iphone_750x1334.jpg" alt="" width="200" class="mr-3">
+            {%   endif %}
+            <div class="media-body">
+                <h5 class="card-title">{{ news_item.title }}</h5>
+                {% autoescape off %}
+                <p class="card-text">{{ news_item.content|linebreaks }}</p>
+                {% endautoescape %}
+            </div>
+        </div>
+    </div>
+    <div class="card-footer text-muted">
+        {{ news_item.created_at|date:"Y-m-d H:i:s"}}
+    </div>
+</div>
+{% endblock %}
